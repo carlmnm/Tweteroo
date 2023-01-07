@@ -17,7 +17,7 @@ app.post('/sign-up', (req, res) => {
     const userData = req.body
     
     users.push(userData)
-    res.status(201).send("OK")
+    res.status(200).send("OK")
 
 })
 
@@ -28,8 +28,14 @@ app.get('/sign-up', (req, res) => {
 app.post('/tweets', (req, res) => {
     const tweet = req.body
 
+    const checkingUser = users.find(item => item === req.body.username)
+
+    if (!checkingUser) {
+        res.send("UNAUTHORIZED")
+    }
+
     tweets.push(tweet)
-    res.status(201).send("OK")
+    res.status(200).send("OK")
 })
 
 app.get('/tweets', (req, res) => {
