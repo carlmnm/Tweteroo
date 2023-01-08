@@ -8,6 +8,9 @@ app.use(cors())
 
 const users = []
 const tweets = []
+let userAvatar = {
+    avatar: ""
+}
 
 {/*app.get('/', (req, res) => {
     res.send('Hello World')
@@ -17,6 +20,7 @@ app.post('/sign-up', (req, res) => {
     const userData = req.body
     
     users.push(userData)
+    userAvatar.avatar = userData.avatar
     res.status(200).send("OK")
 
 })
@@ -28,13 +32,14 @@ app.get('/sign-up', (req, res) => {
 app.post('/tweets', (req, res) => {
     const tweet = req.body
 
-    const checkingUser = users.find(item => item === req.body.username)
+    const checkingUser = users.find(item => item.username === req.body.username)
+
 
     if (!checkingUser) {
         res.send("UNAUTHORIZED")
     }
 
-    tweets.push(tweet)
+    tweets.push({...userAvatar, ...tweet})
     res.status(200).send("OK")
 })
 
